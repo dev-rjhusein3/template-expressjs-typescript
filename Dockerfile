@@ -15,7 +15,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-RUN mkdir -p /app/letsencrypt/archive/warpedearth.com
+RUN mkdir -p /app/letsencrypt/archive/folder
 
 RUN npm run build
 
