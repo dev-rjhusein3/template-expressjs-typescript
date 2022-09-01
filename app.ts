@@ -1,4 +1,4 @@
-import express, { Express, NextFunction, Response, Request } from "express";
+import express, { NextFunction, Response, Request } from "express";
 import * as path from 'path'
 import * as cookieParser from 'cookie-parser';
 import { default as indexRoute } from './src/routes/index'
@@ -19,6 +19,7 @@ app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); /
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use(helmet());
+app.disable("x-powered-by");
 
 console.log(process.argv)
 /**
