@@ -11,17 +11,14 @@ const app = express();
 app.set('views', path.join(__dirname, 'src/public/views'));
 app.set('view engine', 'ejs');
 
+// Use a bunch of middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser.default());
-app.use(express.static('src/public'));
-app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
-app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use(express.static(path.join(__dirname, 'src/public')));
 app.use(helmet());
 app.disable("x-powered-by");
 
-console.log(process.argv)
 /**
  * Routing
  */

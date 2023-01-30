@@ -5,9 +5,10 @@
   "main": "./_build/bin/www.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "tsc --build",
-    "postbuild": "cp -r ./src/public ./_build/src/",
-    "fullbuild": "npm run compile && npm run postbuild",
+    "prebuild": "rm -rf ./_build/*",
+    "build": "tsc --build",
+    "postbuild": "cp -r ./src/public ./_build/src/ && cp -r ./node_modules/bootstrap/dist/* ./_build/src/public/",
+    "fullbuild": "npm run build && npm run postbuild",
     "devstart": "npm run fullbuild && node ./_build/bin/www.js",
     "prodstart": "pm2 ... TODO"
   },
@@ -26,6 +27,7 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
+    "bootstrap": "^5.2.3",
     "command-line-args": "^5.2.1",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.8",
