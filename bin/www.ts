@@ -6,34 +6,36 @@
 import { app } from "../app";
 import * as http from 'http';
 import * as util from 'util'
-import {options} from "../src/options/options";
+import { options } from "../src/options/options";
 import fs from "fs";
-import https from "https";
+import https, { Server } from "https";
+import * as net from 'node:net';
 
 /**
  * Get port from environment and store in Express.
  */
-const port = options.port;
-console.log(options)
+const port = options.port ? options.port : '3000'
+console.log(`Options used: ${JSON.stringify(options)}`)
 app.set('port', port);
 
 const pathToCert = "";
 const pathToKey = "";
 
 /**
- * Create HTTP server.
+ * Create HTTP or HTTPS server.
  */
-let server: any = undefined;
-try{
+let server: net.Server;
+
+try {
   const httpsOptions =
-      {
-        cert: fs.readFileSync(pathToCert),
-        key: fs.readFileSync(pathToKey)
-      }
+  {
+    cert: fs.readFileSync(pathToCert),
+    key: fs.readFileSync(pathToKey)
+  }
   server = https.createServer(httpsOptions, app);
-}catch(err) {
-  if (err instanceof Error){
-    console.log(err.name);
+} catch (err) {
+  if (err instanceof Error) {
+    console.log(`There was a problem starting an https server, starting http server instead`);
   }
   server = http.createServer(app);
 }
@@ -41,13 +43,10 @@ try{
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.on('error', () => {
-  console.log("Error")
-});
-server.on('listening', () => {
-  console.log(`Listening on ${util.inspect(server.address())}:${port}`)
+server.on('error', (error) => {
+  console.log(`Error: ${error}`)
 });
 
 server.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`View app at http://localhost:${port}`)
 });
