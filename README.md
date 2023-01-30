@@ -2,9 +2,9 @@
 
 ## Steps to use
 
-1. Click the big green button that says "Use this template"
+1. Click the big green button that says "Use this template".
 2. Select "Create a new repository" & proceed with the steps to create it.
-3. Clone it to your local machine
+3. Clone it to your local machine and run `npm i` to install dependencies.
 4. Start up the DEVELOPMENT server with ```npm run devstart -- --port 43434```
 5. Start up the PRODUCTION server with ```npm run prodstart -- --port 43434```
 
