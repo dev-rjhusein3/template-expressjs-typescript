@@ -13,7 +13,7 @@ import * as net from 'node:net';
 /**
  * Get port from environment and store in Express.
  */
-const port = options.port ? options.port : '3000'
+const port = options.port ? options.port : '8080'
 
 app.set('port', port);
 

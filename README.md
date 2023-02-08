@@ -5,12 +5,13 @@
 1. Click the big green button that says "Use this template".
 2. Select "Create a new repository" & proceed with the steps to create it.
 3. Clone it to your local machine and run `npm i` to install dependencies.
-4. Start up the DEVELOPMENT server with ```npm run devstart -- --port 43434```
-5. Start up the PRODUCTION server with ```npm run prodstart -- --port 43434```
+4. Start up the DEVELOPMENT server with ```npm run dev-start -- --port 8080```
+5. Start up the PRODUCTION server with ```npm run prod-start -- --port 8080```
 
 ## Setting up HTTPS with SSL
 1. Have a cert and key to use
 2. Put the path of said certs in `./bin/www.ts`; lines 21 & 22
+3. If using docker, ensure you map host port to docker port, like `443:8080`, when you `docker run`
 
 ## Docker
 A quick reference to how you can build, push, and run this app as a docker container.  
@@ -33,8 +34,9 @@ docker push {registry}/{user name}/{project name}:{version}
 ```
 docker run \
 -d \
--p 443:3000 \
+-p 443:8080 \
 -v /etc/letsencrypt:/app/etc/letsencrypt \
+--restart unless-stopped \
 {registry}/{user name}/{project name}:{version}
 ```
 
@@ -42,4 +44,4 @@ docker run \
 1. The first set of double hyphens (`--`) takes the argument passed in the second half of the command (`--port 43434`) and forwards it to the `node {filepath}` command defined in the npm script `devstart`.  
 It's the `npm` way to forward on a CLI argument.
 
-2. In `src/routes/helpers/validate.ts` there is a `HostAllowed()` method that validates the host header. If you change the port number from the default `3000`, then you'll need to edit this too.
+2. In `src/routes/helpers/validate.ts` there is a `HostAllowed()` method that validates the host header. If you change the port number from the default `8080`, then you'll need to edit this too.

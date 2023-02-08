@@ -2,4 +2,4 @@ FROM node:19-alpine
 WORKDIR /app
 COPY . .
 CMD ["npm", "run", "dev-start"]
-EXPOSE 3000
+EXPOSE 8080
