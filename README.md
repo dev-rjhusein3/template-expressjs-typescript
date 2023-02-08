@@ -41,7 +41,7 @@ docker run \
 ```
 
 ## Some notes:
-1. The first set of double hyphens (`--`) takes the argument passed in the second half of the command (`--port 43434`) and forwards it to the `node {filepath}` command defined in the npm script `devstart`.  
+1. The first set of double hyphens (`--`) takes the argument passed in the second half of the command (`--port 8080`) and forwards it to the `node {filepath}` command defined in the npm script `devstart`.  
 It's the `npm` way to forward on a CLI argument.
 
 2. In `src/routes/helpers/validate.ts` there is a `HostAllowed()` method that validates the host header. If you change the port number from the default `8080`, then you'll need to edit this too.
