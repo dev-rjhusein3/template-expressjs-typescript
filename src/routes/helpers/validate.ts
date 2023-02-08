@@ -1,7 +1,7 @@
-import {Request} from "express";
+import { Request } from "express";
 
-function noArgs(req: Request){
-    return Object.keys(req.query).length <= 0;
+const HOSTS = ['localhost:3000', 'yoursite.com'];
+
+export const HostAllowed = (req: Request): boolean => {
+    return HOSTS.includes(req.header("host") ?? 'NULL')
 }
-
-export {noArgs}

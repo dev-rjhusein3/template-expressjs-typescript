@@ -5,26 +5,29 @@
  */
 import { app } from "../app";
 import * as http from 'http';
-import * as util from 'util'
 import { options } from "../src/options/options";
 import fs from "fs";
-import https, { Server } from "https";
+import https from "https";
 import * as net from 'node:net';
 
 /**
  * Get port from environment and store in Express.
  */
 const port = options.port ? options.port : '3000'
-console.log(`Options used: ${JSON.stringify(options)}`)
+
 app.set('port', port);
 
-const pathToCert = "";
-const pathToKey = "";
+/**
+ * Paths to the SSL cert and privkey. 
+ */
+const pathToCert = "/app/etc/letsencrypt/..."; // TODO: Change this to match your path
+const pathToKey = "/app/etc/letsencrypt/..."; // TODO: Change this to match your path
 
 /**
  * Create HTTP or HTTPS server.
  */
 let server: net.Server;
+let protocol: string;
 
 try {
   const httpsOptions =
@@ -33,11 +36,13 @@ try {
     key: fs.readFileSync(pathToKey)
   }
   server = https.createServer(httpsOptions, app);
+  protocol = 'https'
+
 } catch (err) {
-  if (err instanceof Error) {
-    console.log(`There was a problem starting an https server, starting http server instead`);
-  }
+  if (err instanceof Error) {}
+
   server = http.createServer(app);
+  protocol = 'http'
 }
 
 /**
@@ -48,5 +53,5 @@ server.on('error', (error) => {
 });
 
 server.listen(port, () => {
-  console.log(`View app at http://localhost:${port}`)
+  console.log(`View app at ${protocol}://localhost:${port}`)
 });

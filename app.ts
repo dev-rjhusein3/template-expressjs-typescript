@@ -1,8 +1,7 @@
 import express, { NextFunction, Response, Request } from "express";
 import * as path from 'path'
 import * as cookieParser from 'cookie-parser';
-import { default as indexRoute } from './src/routes/index'
-import { default as catchAllRoute } from './src/routes/catch_all'
+import { default as allRoutes } from './src/routes/main'
 import helmet from "helmet";
 
 const app = express();
@@ -22,8 +21,9 @@ app.disable("x-powered-by");
 /**
  * Routing
  */
-app.use('/', indexRoute);
-app.use('*', catchAllRoute);
+allRoutes.forEach(route => {
+    app.use(route.path, route.route)
+})
 
 /**
  * Error Handling

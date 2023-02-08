@@ -5,12 +5,12 @@
   "main": "./_build/bin/www.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "rm -rf ./_build/*",
-    "build": "tsc --build",
-    "postbuild": "cp -r ./src/public ./_build/src/ && cp -r ./node_modules/bootstrap/dist/* ./_build/src/public/",
-    "fullbuild": "npm run build && npm run postbuild",
-    "devstart": "npm run fullbuild && node ./_build/bin/www.js",
-    "prodstart": "pm2 ... TODO"
+    "pre-build": "rm -rf ./_build/* && npm i",
+    "build": "npx tsc --build",
+    "post-build": "cp -r ./src/public ./_build/src/ && cp -r ./node_modules/bootstrap/dist/* ./_build/src/public/ && cp ./Dockerfile ./_build/Dockerfile",
+    "full-build": "npm run pre-build && npm run build && npm run post-build",
+    "dev-start": "npm run full-build && node ./_build/bin/www.js",
+    "prod-start": "npm run full-build && node ./_build/bin/www.js &"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
     "@types/ejs": "^3.1.1",
     "@types/express": "^4.17.16",
     "@types/node": "^18.11.18",
-    "nodemon": "^2.0.20"
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
@@ -32,7 +32,6 @@
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
-    "helmet": "^6.0.1",
-    "pm2": "^5.2.2"
+    "helmet": "^6.0.1"
   }
 }
